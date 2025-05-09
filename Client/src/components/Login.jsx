@@ -3,6 +3,9 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 function Login() {
+
+  const BASE_URL = 'https://authentication-application-server.onrender.com'
+  
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [pwdVisibility, setPwdVisibility] = useState(false)
@@ -30,7 +33,7 @@ function Login() {
     event.preventDefault()
     if (!emailError && !passworError) {
       async function submitData() {
-        await axios.post('http://localhost:4000/api/login', { email, password })
+        await axios.post(`${BASE_URL}/api/login`, { email, password })
           .then(response => {
             if (response.data.body.user.email === email) {
               console.log(response.data.body)
