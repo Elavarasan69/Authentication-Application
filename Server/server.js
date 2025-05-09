@@ -5,7 +5,12 @@ const cors = require('cors')
 
 const app = express()
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: 'https://authentication-application-client.onrender.com', // Or '*' for all origins (not recommended for production)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow necessary HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+    credentials: true // If you are using cookies or other credentials
+}))
 
 const port = process.env.PORT || 4000
 
