@@ -3,6 +3,9 @@ import { useEffect } from 'react'
 import axios from 'axios'
 
 function Profile() {
+
+    const BASE_URL = 'https://authentication-application-server.onrender.com'
+    
     const [fullname, setFullname] = useState("")
     const [email, setEmail] = useState("")
     const [dob, setDOB] = useState("")
@@ -63,7 +66,7 @@ function Profile() {
     function formSubmit(event) {
         event.preventDefault()
             async function submitData(){
-                await axios.post('http://localhost:3001/profile',{fullname,email,dob,contact,no,street,locality,city,pincode,state})
+                await axios.post(`${BASE_URL}/profile`,{fullname,email,dob,contact,no,street,locality,city,pincode,state})
                 .then(response => console.log(response))
                 .catch(error => console.log(error.message))
                 
