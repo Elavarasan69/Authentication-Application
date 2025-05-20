@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { assets } from '../assets/assets'
 
 function Login() {
-
-  const BASE_URL = 'https://authentication-application-server.onrender.com'
-  
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [pwdVisibility, setPwdVisibility] = useState(false)
@@ -13,6 +11,8 @@ function Login() {
   const [errorPasswordText, setErrorPasswordText] = useState('')
   const [emailError, setEmailError] = useState(false)
   const [passworError, setPasswordError] = useState(false)
+
+  const BASE_URL = 'http://localhost:4000/api/'
 
   const navigate = useNavigate()
 
@@ -33,7 +33,7 @@ function Login() {
     event.preventDefault()
     if (!emailError && !passworError) {
       async function submitData() {
-        await axios.post(`${BASE_URL}/api/login`, { email, password })
+        await axios.post(`${BASE_URL}login`, { email, password })
           .then(response => {
             if (response.data.body.user.email === email) {
               console.log(response.data.body)
@@ -71,19 +71,19 @@ function Login() {
     <div className='box-section'>
       <div className='box-container' >
         <div className='image-container'>
-          <img className='art-images' src="/public/images/login.jpg" alt="login" />
+          <img className='art-images' src={assets.login} alt="login" />
         </div>
         <div className='form-container'>
           <form className='form' onSubmit={login}>
             <h2 style={{ textAlign: "center", fontWeight: "500" }}>Login</h2>
             <div className={!emailError ? 'input-field' : 'error-input'}>
               <input className='input-box' type="text" id='email' value={email} onChange={handleEmail} placeholder='Email' required />
-              <img src="/public/icons/user.svg" alt="user" />
+              <img src={assets.user} alt="user" />
             </div>
             <p className={emailError ? 'error-text' : 'none'}>{errorEmailText}</p>
             <div className={!passworError ? 'input-field' : 'error-input'}>
               <input className='input-box' type={pwdVisibility ? "text" : "password"} id='pwd' value={password} onChange={handlePwd} placeholder='Password' required />
-              <img onClick={() => { setPwdVisibility(!pwdVisibility) }} src={pwdVisibility ? "/public/icons/visibility-on.svg" : "/public/icons/visibility-off.svg"} alt="user" />
+              <img onClick={() => { setPwdVisibility(!pwdVisibility) }} src={pwdVisibility ? assets.visibility_on : assets.visibility_off} alt="user" />
             </div>
             <p className={passworError ? 'error-text' : 'none'}>{errorPasswordText}</p>
             <button className='button-primary' type='submit'>Login</button>

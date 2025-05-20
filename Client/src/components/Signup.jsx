@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { assets } from '../assets/assets'
 
 function Signup() {
-
-    const BASE_URL = 'https://authentication-application-server.onrender.com'
-    
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -19,6 +17,8 @@ function Signup() {
     const [passworError, setPasswordError] = useState(false)
     const [errorRespone,setErrorResponse] = useState(false)
     const [errorResponeText,setErrorResponseText] = useState("")
+
+    const BASE_URL = 'http://localhost:4000/api/'
 
     const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,}$/
@@ -74,7 +74,7 @@ function Signup() {
         event.preventDefault()
         if (!emailError && !passworError && !passwordMatch) {
             async function submitData() {
-                await axios.post(`${BASE_URL}/api/register`, { email, password })
+                await axios.post(`${BASE_URL}register`, { email, password })
                     .then(response => {
                         console.log(response.data)
                         if(response.data.message == "User already exists") {
@@ -109,19 +109,19 @@ function Signup() {
 
                         <div className={!emailError ? 'input-field' : 'error-input'}>
                             <input className='input-box' type="text" id='email' value={email} onChange={handleEmail} placeholder='Email' required />
-                            <img src="/public/icons/user.svg" alt="user" />
+                            <img src={assets.user} alt="user" />
                         </div>
                         <p className={emailError ? 'error-text' : 'none'}>{errorEmailText}</p>
 
                         <div className={!passworError ? 'input-field' : 'error-input'}>
                             <input className='input-box' type={pwdVisibility ? "text" : "password"} id='pwd' value={password} onChange={handlePwd} placeholder='Password' required />
-                            <img onClick={() => { setPwdVisibility(!pwdVisibility) }} src={pwdVisibility ? "/public/icons/visibility-on.svg" : "/public/icons/visibility-off.svg"} alt="user" />
+                            <img onClick={() => { setPwdVisibility(!pwdVisibility) }} src={pwdVisibility ? assets.visibility_on : assets.visibility_off} alt="user" />
                         </div>
                         <p className={passworError ? 'error-text' : 'none'}>{errorPasswordText}</p>
 
                         <div className={!passwordMatch ? 'input-field' : 'error-input'}>
                             <input className='input-box' type={cpwdVisibility ? "text" : "password"} id='cpwd' value={confirmPassword} onChange={handleCpdw} placeholder='Confirm Password' required />
-                            <img onClick={() => { setcPwdVisibility(!cpwdVisibility) }} src={cpwdVisibility ? "/public/icons/visibility-on.svg" : "/public/icons/visibility-off.svg"} alt="user" />
+                            <img onClick={() => { setcPwdVisibility(!cpwdVisibility) }} src={cpwdVisibility ? assets.visibility_on : assets.visibility_off} alt="user" />
                         </div>
                         <p className={passwordMatch ? 'error-text' : 'none'}>{errorcPasswordText}</p>
 
@@ -131,7 +131,7 @@ function Signup() {
                     </form>
                 </div>
                 <div className='image-container'>
-                    <img className='art-images' src="/public/images/signup.jpg" alt="login" />
+                    <img className='art-images' src={assets.signup} alt="login" />
                 </div>
 
             </div>
